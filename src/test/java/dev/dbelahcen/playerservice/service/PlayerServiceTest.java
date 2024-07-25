@@ -40,7 +40,7 @@ class PlayerServiceTest {
         void happyPath() {
             when(playerRepository.getAllPlayers()).thenReturn(Flux.just(player1, player2));
 
-            StepVerifier.create(playerService.getPlayers())
+            StepVerifier.create(playerService.getPlayers(0, 2))
                     .expectNext(new ServiceResponse(List.of(player1, player2)))
                     .verifyComplete();
         }
@@ -49,7 +49,7 @@ class PlayerServiceTest {
         void repositoryReturnsEmptyResponse() {
             when(playerRepository.getAllPlayers()).thenReturn(Flux.empty());
 
-            StepVerifier.create(playerService.getPlayers())
+            StepVerifier.create(playerService.getPlayers(0, 2))
                     .expectNext(new ServiceResponse(emptyList()))
                     .verifyComplete();
         }
@@ -58,7 +58,7 @@ class PlayerServiceTest {
         void repositoryReturnsAnError() {
             when(playerRepository.getAllPlayers()).thenReturn(Flux.error(new RuntimeException("Error flux")));
 
-            StepVerifier.create(playerService.getPlayers())
+            StepVerifier.create(playerService.getPlayers(0, 2))
                     .expectError(RuntimeException.class)
                     .verify();
         }

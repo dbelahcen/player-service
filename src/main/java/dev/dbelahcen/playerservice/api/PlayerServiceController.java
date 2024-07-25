@@ -3,10 +3,7 @@ package dev.dbelahcen.playerservice.api;
 import dev.dbelahcen.playerservice.api.model.ServiceResponse;
 import dev.dbelahcen.playerservice.service.PlayerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -20,8 +17,9 @@ public class PlayerServiceController {
     }
 
     @GetMapping
-    public Mono<ResponseEntity<ServiceResponse>> getPlayers() {
-        return playerService.getPlayers()
+    public Mono<ResponseEntity<ServiceResponse>> getPlayers(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                                            @RequestParam(value = "limit", defaultValue = "100") int limit) {
+        return playerService.getPlayers(offset, limit)
                 .map(flux -> ResponseEntity.ok().body(flux))
                 .switchIfEmpty(Mono.just(ResponseEntity.noContent().build()));
     }

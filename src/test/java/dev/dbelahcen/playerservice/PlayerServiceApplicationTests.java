@@ -20,10 +20,10 @@ class PlayerServiceApplicationTests {
 
     @Test
     void testGetAllPlayers() {
-        StepVerifier.create(playerServiceController.getPlayers())
+        StepVerifier.create(playerServiceController.getPlayers(0, 2))
                 .assertNext(entity -> {
                     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-                    assertThat(entity.getBody().getPlayers().size()).isEqualTo(5);
+                    assertThat(entity.getBody().getPlayers().size()).isEqualTo(2);
                 })
                 .verifyComplete();
     }

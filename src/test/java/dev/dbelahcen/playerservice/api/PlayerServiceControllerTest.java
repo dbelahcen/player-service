@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,9 +29,9 @@ class PlayerServiceControllerTest {
 
     @Test
     void getPlayersHappyPath() {
-        when(playerService.getPlayers()).thenReturn(Mono.just(serviceResponse));
+        when(playerService.getPlayers(anyInt(), anyInt())).thenReturn(Mono.just(serviceResponse));
 
-        StepVerifier.create(playerServiceController.getPlayers())
+        StepVerifier.create(playerServiceController.getPlayers(0, 5))
                 .assertNext(entity -> {
                     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
                     assertThat(entity.getBody()).isEqualTo(serviceResponse);

@@ -1,8 +1,5 @@
 # Player-Service
-This service is a crud service for players. 
-2 APIs are exposed:
-- GET /api/players: returns all players from the DB
-- GET /api/players/{id}: returns a player by id. In case ID does not exist, it returns 404.
+This service is a crud service for players.
 
 ## Setup
 
@@ -22,3 +19,21 @@ Command (from the project root directory):
 docker build -t player-service:latest .
 docker run --rm -p8080:8080 player-service:latest
 ```
+
+## API Documentation
+
+### Get all players
+
+Path: `/api/players`
+
+Parameters Description
+
+| Parameter | Description | Default Value |
+| :---: | :---: | :---: |
+| offset | How many rows to skip | 0 |
+| limit | How many rows to return | 10 |
+
+
+### Get by ID
+
+Returns a player by id. In case ID does not exist, it returns 404.

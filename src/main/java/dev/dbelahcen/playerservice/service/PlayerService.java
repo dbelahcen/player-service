@@ -27,8 +27,10 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public Mono<ServiceResponse> getPlayers() {
+    public Mono<ServiceResponse> getPlayers(int offset, int limit) {
         return playerRepository.getAllPlayers()
+                .skip(offset)
+                .take(limit)
                 .collectList()
                 .map(ServiceResponse::new);
     }
