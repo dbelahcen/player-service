@@ -26,14 +26,38 @@ docker run --rm -p8080:8080 player-service:latest
 
 Path: `/api/players`
 
-Parameters Description
+#### Parameters Description
 
 | Parameter | Description | Default Value |
 | :---: | :---: | :---: |
 | offset | How many rows to skip | 0 |
 | limit | How many rows to return | 10 |
 
+#### Return codes
+
+| Code |            Use case             |
+|:----:|:-------------------------------:|
+| 200  |             Success             |
+| 204  | no players returned from the DB |
+| 400  |      Invalid query params       | 
+| 500  |        Unexpected error         |
 
 ### Get by ID
 
 Returns a player by id. In case ID does not exist, it returns 404.
+
+#### Parameters Description
+
+This API accepts a single path parameter:
+
+| Parameter |    Description     | Default Value |
+|:---------:|:------------------:|:-------------:|
+| playerId  | PLayer ID to fetch |       -       |
+
+#### Return codes
+
+| Code |     Use case      |
+|:----:|:-----------------:|
+| 200  |      Success      |
+| 404 | Missing player ID |
+| 500  | Unexpected error  |
