@@ -20,6 +20,8 @@ public class PlayerCsvFileReader {
                 .withType(PlayerDO.class)
                 .withIgnoreLeadingWhiteSpace(true)
                 .withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_SEPARATORS)
+                .withThrowExceptions(false)
+                .withExceptionHandler(new MismatchExceptionHandler())
                 .build()
                 .stream()
                 .collect(Collectors.toMap(PlayerDO::getPlayerID, Function.identity()));

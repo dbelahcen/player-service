@@ -1,5 +1,6 @@
 package dev.dbelahcen.playerservice.repository.csv;
 
+import dev.dbelahcen.playerservice.exceptions.InitializationException;
 import dev.dbelahcen.playerservice.model.Player;
 import dev.dbelahcen.playerservice.repository.PlayerRepository;
 import jakarta.annotation.PostConstruct;
@@ -43,7 +44,8 @@ public class PlayerCsvRepository implements PlayerRepository {
                     .entrySet().stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, entry -> playerDoConverter.convertPlayerDo(entry.getValue())));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            logger.error("CSV File {} not found!", playerCsvFileLocation);
+            throw new InitializationException("CSV File not found!", e);
         }
         if (MapUtils.isNotEmpty(tempMap)) {
             playerIdToPlayer = tempMap;
